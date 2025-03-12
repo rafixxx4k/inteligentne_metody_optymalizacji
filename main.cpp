@@ -4,6 +4,17 @@
 #include "solutionOne.h"
 
 using namespace std;
+void loadGraph(string filename, Graph *g);
+void dumpResults(string outFile, Graph *g, vector<int> ham1, vector<int> ham2);
+
+int main() {
+  Graph graph = Graph();
+  string inFile = "in\\kroA200.tsp", outFile = "out\\kroA200.out";
+  loadGraph(inFile, &graph);
+  vector<int> ham1 = {}, ham2 = {};
+  solutionOne(graph, &ham1, &ham2);
+  dumpResults(outFile, &graph, ham1, ham2);
+}
 
 void loadGraph(string filename, Graph *g) {
   string temp;
@@ -49,13 +60,3 @@ void dumpResults(string outFile, Graph *g, vector<int> ham1, vector<int> ham2) {
              << ") ";
   myResult.close();
 }
-
-int main() {
-  Graph graph = Graph();
-  string inFile = "graphs\\kroA200.tsp", outFile = "out.out";
-  loadGraph(inFile, &graph);
-  vector<int> ham1 = {1, 2, 3, 4, 1}, ham2 = {5, 6, 7, 5};
-  greedy(graph, &ham1, &ham2);
-  dumpResults(outFile, &graph, ham1, ham2);
-}
-

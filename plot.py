@@ -36,6 +36,6 @@ def plot_groups(group1, group2):
     plt.show()
 
 # Run the script
-filename = "out.out"  # Change if needed
+filename = "out\kroA200.out"  # Change if needed
 group1, group2 = parse_file(filename)
 plot_groups(group1, group2)

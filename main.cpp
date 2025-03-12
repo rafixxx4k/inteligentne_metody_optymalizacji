@@ -2,6 +2,7 @@
 
 #include "Graph.h"
 #include "solutionOne.h"
+#include "solutionTwo.h"
 
 using namespace std;
 void loadGraph(string filename, Graph *g);
@@ -12,7 +13,8 @@ int main() {
   string inFile = "in\\kroA200.tsp", outFile = "out\\kroA200.out";
   loadGraph(inFile, &graph);
   vector<int> ham1 = {}, ham2 = {};
-  solutionOne(graph, &ham1, &ham2);
+  // solutionOne(graph, &ham1, &ham2);
+  solutionTwo(graph, &ham1, &ham2);
   dumpResults(outFile, &graph, ham1, ham2);
 }
 

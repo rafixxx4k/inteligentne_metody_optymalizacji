@@ -1,5 +1,4 @@
 import sys
-
 import matplotlib.pyplot as plt
 
 def parse_file(filename):
@@ -12,7 +11,7 @@ def parse_file(filename):
 
     return group1, group2
 
-def plot_groups(group1, group2):
+def plot_groups(group1, group2, filename):
     # Create the plot
     plt.figure(figsize=(8, 6))
 
@@ -31,7 +30,7 @@ def plot_groups(group1, group2):
     # Add labels and a title
     plt.xlabel('X coordinates')
     plt.ylabel('Y coordinates')
-    plt.title('Lines Between Consecutive Points')
+    plt.title(filename.split(".")[0].replace("_", " "))  # Replace underscores with spaces for the title
 
     # Show the plot
     plt.grid(True)
@@ -42,6 +41,6 @@ if len(sys.argv) != 2:
     print("Usage: python plot.py <filename>")
     sys.exit(1)
 
-filename = "out/"+sys.argv[1] 
+filename = "out/" + sys.argv[1]
 group1, group2 = parse_file(filename)
-plot_groups(group1, group2)
+plot_groups(group1, group2, sys.argv[1])  # Pass the original filename to the plot function

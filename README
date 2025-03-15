@@ -1,0 +1,14 @@
+To compile:
+```cmd
+g++ -o main.exe main.cpp greedy.cpp regret.cpp
+```
+
+To polot a result:
+```
+python plot.py <file.out>
+```
+
+To run automaticly:
+```
+python stats.py
+```

@@ -1,3 +1,5 @@
+import sys
+
 import matplotlib.pyplot as plt
 
 def parse_file(filename):
@@ -36,6 +38,10 @@ def plot_groups(group1, group2):
     plt.show()
 
 # Run the script
-filename = "out\kroA200.out"  # Change if needed
+if len(sys.argv) != 2:
+    print("Usage: python plot.py <filename>")
+    sys.exit(1)
+
+filename = "out/"+sys.argv[1] 
 group1, group2 = parse_file(filename)
 plot_groups(group1, group2)

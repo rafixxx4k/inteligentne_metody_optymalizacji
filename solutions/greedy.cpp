@@ -1,6 +1,6 @@
 #include "greedy.h"
 
-void greedy(Graph g, vector<int> *ham1, vector<int> *ham2) {
+void greedyNearest(Graph g, vector<int> *ham1, vector<int> *ham2) {
     srand(time(0));
     int start1 = rand() % g.n;
     int start2 =
@@ -61,3 +61,18 @@ void greedy(Graph g, vector<int> *ham1, vector<int> *ham2) {
       visited[bestVertex] = true;
     }
   };
+  void random(Graph g, vector<int> *ham1, vector<int> *ham2){
+    srand(time(0));
+    auto rng = default_random_engine{static_cast<unsigned>(chrono::system_clock::now().time_since_epoch().count())};
+    vector<int> order(g.n);
+    for (int i = 0; i < g.n; i++) {
+      order[i] = i;
+    }
+    shuffle(order.begin(), order.end(), rng);
+    for (int i = 0; i < g.n; i+=2) {
+      ham1->push_back(order[i]);
+      ham2->push_back(order[i+1]);
+    }
+    ham1->push_back(ham1->front());
+    ham2->push_back(ham2->front());
+  }

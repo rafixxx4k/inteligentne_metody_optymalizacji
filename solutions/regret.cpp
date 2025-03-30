@@ -46,6 +46,7 @@ void regret2(Graph g, vector<int> *ham1, vector<int> *ham2) {
 };
 
 void regretWeighted(Graph g, vector<int> *ham1, vector<int> *ham2) {
+  double alpha = 0.6;
   srand(time(0));
   int start1 = rand() % g.n;
   int start2 =
@@ -78,8 +79,8 @@ void regretWeighted(Graph g, vector<int> *ham1, vector<int> *ham2) {
       if (regrets.size() == 1)
         regret = -get<0>(regrets[0]);
       else
-        regret = double(get<0>(regrets[1]) - get<0>(regrets[0])) /
-                 get<0>(regrets[0]);
+        regret = alpha * double(get<0>(regrets[1]) - get<0>(regrets[0])) -
+                 (1 - alpha) * get<0>(regrets[0]);
       if (firstVertex || regret > bestRegret) {
         firstVertex = false;
         bestRegret = regret;

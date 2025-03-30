@@ -4,7 +4,7 @@
 
 #include <bits/stdc++.h>
 
-#include "Graph.h"
+#include "../Graph.h"
 
 using namespace std;
 

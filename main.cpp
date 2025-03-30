@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 
 #include "Graph.h"
-#include "greedy.h"
-#include "regret.h"
+#include "solutions/greedy.h"
+#include "solutions/local.h"
+#include "solutions/regret.h"
 
 using namespace std;
 void loadGraph(string filename, Graph *g);
@@ -10,48 +11,63 @@ void dumpResults(string outFile, Graph *g, vector<int> ham1, vector<int> ham2);
 int calcDistance(Graph g, vector<int> ham1, vector<int> ham2);
 
 int main(int argc, char *argv[]) {
-  string method = argc == 4? argv[1] : "greedy";
-  string inFile = argc == 4? argv[2] : "kroA200.tsp";
-  string outFile = argc == 4? argv[3] : "kroA200.out";
+  string create = argc == 5 ? argv[1] : "random";
+  string method = argc == 5 ? argv[2] : "localGreedyEdge";
+  string inFile = argc == 5 ? argv[3] : "kroA200.tsp";
+  string outFile = argc == 5 ? argv[4] : "test.out";
   inFile = "in/" + inFile;
   outFile = "out/" + outFile;
   Graph graph = Graph();
   loadGraph(inFile, &graph);
   vector<int> ham1 = {}, ham2 = {};
-
-  if(method=="greedy")
-    greedy(graph, &ham1, &ham2);
-  else if(method=="greedyCycle")
+  if (create == "greedyNearest")
+    greedyNearest(graph, &ham1, &ham2);
+  else if (create == "greedyCycle")
     greedyCycle(graph, &ham1, &ham2);
-  else if(method=="regret2")
+  else if (create == "regret2")
     regret2(graph, &ham1, &ham2);
-  else if(method=="regretWeighted")
+  else if (create == "regretWeighted")
     regretWeighted(graph, &ham1, &ham2);
+  else if (create == "random")
+    random(graph, &ham1, &ham2);
+  cout << calcDistance(graph, ham1, ham2) << " ";
+  auto start = chrono::high_resolution_clock::now();
+  if (method == "localSteepVert")
+    localSteepVert(graph, &ham1, &ham2);
+  else if (method == "localGreedyVert")
+    localGreedyVert(graph, &ham1, &ham2);
+  else if (method == "localSteepEdge")
+    localSteepEdge(graph, &ham1, &ham2);
+  else if (method == "localGreedyEdge")
+    localGreedyEdge(graph, &ham1, &ham2);
+  auto end = chrono::high_resolution_clock::now();
+  auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
 
   dumpResults(outFile, &graph, ham1, ham2);
-  cout<<calcDistance(graph, ham1, ham2)<<endl;
+  cout << calcDistance(graph, ham1, ham2) << " ";
+  cout << duration.count() << endl;
 }
 
 void loadGraph(string filename, Graph *g) {
   string temp;
-  ifstream mygraph;
-  mygraph.open(filename);
-  getline(mygraph, temp);  // NAME
+  ifstream myGraph;
+  myGraph.open(filename);
+  getline(myGraph, temp);  // NAME
   g->name = temp.substr(temp.find(' ') + 1);
-  getline(mygraph, temp);  // TYPE
-  getline(mygraph, temp);  // COMMENT
-  getline(mygraph, temp);  // DIMENTIONS
+  getline(myGraph, temp);  // TYPE
+  getline(myGraph, temp);  // COMMENT
+  getline(myGraph, temp);  // DIMENSIONS
   g->n = atoi(temp.substr(temp.find(' ') + 1).c_str());
-  getline(mygraph, temp);  // EDGE_WEIGHT_TYPE
-  getline(mygraph, temp);  // NODE_COORD_SECTION
+  getline(myGraph, temp);  // EDGE_WEIGHT_TYPE
+  getline(myGraph, temp);  // NODE_COORD_SECTION
   g->v.resize(g->n, vector<int>(g->n, 0));
   g->pos.resize(g->n);
   for (int i = 0; i < g->n; i++) {
     int id, x, y;
-    mygraph >> id >> x >> y;
+    myGraph >> id >> x >> y;
     g->pos[i] = make_pair(x, y);
   }
-  mygraph.close();
+  myGraph.close();
   for (int i = 0; i < g->n; i++) {
     for (int j = i + 1; j < g->n; j++) {
       float dist = round(sqrt(pow(g->pos[i].first - g->pos[j].first, 2.0) +

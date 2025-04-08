@@ -11,7 +11,7 @@ def run_exe(create, alg, instance, runs=200):
         try:
             result = subprocess.run(["./main.exe", create, alg, f"{instance}.tsp", f"{alg}_{instance}_{create}{i:03d}.out"], capture_output=True, text=True, check=True)
             output = result.stdout.strip().split()  # Convert to float for calculations
-            results.append((f"{alg}_{instance}_{i:03d}.out", float(output[1])))  # Store (index, value)
+            results.append((f"{alg}_{instance}_{create}{i:03d}.out", float(output[1])))  # Store (index, value)
             improve.append(float(output[1]) - float(output[0]))  
             time.append(float(output[2]))
         except subprocess.CalledProcessError as e:
@@ -38,10 +38,10 @@ def compute_statistics(data):
     }
 
 if __name__ == "__main__":
-    create = ["random", "regretWeighted"] # "regretWeighted" ,
-    algs = ["localGreedyEdge"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
+    create = ["regretWeighted"] # "regretWeighted" ,
+    algs = ["localSteepEdge", "localSteepVert"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
     instances = ["kroA200", "kroB200"]
-    times = 100
+    times = 10
 
     all_results = {}
     for c in create:

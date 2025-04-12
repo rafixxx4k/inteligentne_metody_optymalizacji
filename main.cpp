@@ -4,6 +4,7 @@
 #include "solutions/greedy.h"
 #include "solutions/local.h"
 #include "solutions/regret.h"
+#include "solutions/smart.h"
 
 using namespace std;
 void loadGraph(string filename, Graph *g);
@@ -12,7 +13,7 @@ int calcDistance(Graph g, vector<int> ham1, vector<int> ham2);
 
 int main(int argc, char *argv[]) {
   string create = argc == 5 ? argv[1] : "random";
-  string method = argc == 5 ? argv[2] : "localSteepEdge";
+  string method = argc == 5 ? argv[2] : "caching";
   string inFile = argc == 5 ? argv[3] : "kroA200.tsp";
   string outFile = argc == 5 ? argv[4] : "test.out";
   inFile = "in/" + inFile;
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]) {
     regretWeighted(graph, &ham1, &ham2);
   else if (create == "random")
     random(graph, &ham1, &ham2);
-  
+
   cout << calcDistance(graph, ham1, ham2) << " ";
   auto start = chrono::high_resolution_clock::now();
   if (method == "localSteepVert")
@@ -41,6 +42,10 @@ int main(int argc, char *argv[]) {
     localSteepEdge(graph, &ham1, &ham2);
   else if (method == "localGreedyEdge")
     localGreedyEdge(graph, &ham1, &ham2);
+  else if (method == "candidate")
+    candidate(graph, &ham1, &ham2);
+  else if (method == "caching")
+    caching(graph, &ham1, &ham2);
   auto end = chrono::high_resolution_clock::now();
   auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
 

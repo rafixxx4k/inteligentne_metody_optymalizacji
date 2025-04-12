@@ -1,6 +1,6 @@
 To compile:
 ```cmd
-g++ -o main.exe main.cpp solutions/greedy.cpp solutions/regret.cpp solutions/local.cpp
+g++ -o main.exe main.cpp solutions/greedy.cpp solutions/regret.cpp solutions/local.cpp solutions/smart.cpp
 ```
 
 To plot a result:

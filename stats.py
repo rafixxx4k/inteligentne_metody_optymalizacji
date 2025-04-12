@@ -38,10 +38,10 @@ def compute_statistics(data):
     }
 
 if __name__ == "__main__":
-    create = ["regretWeighted"] # "regretWeighted" ,
-    algs = ["localSteepEdge", "localSteepVert"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
+    create = ["regretWeighted", "random"] # "regretWeighted" ,
+    algs = [ "caching"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
     instances = ["kroA200", "kroB200"]
-    times = 10
+    times = 100
 
     all_results = {}
     for c in create:

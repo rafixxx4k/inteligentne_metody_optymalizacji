@@ -172,14 +172,11 @@ void LNS(Graph g, vector<int> *ham1, vector<int> *ham2) {
   int iteration = 0;
   int maxTime = 10310;
   auto start = chrono::high_resolution_clock::now();
-  //   cout<<"in ILS"<<endl;
   srand(time(0));
   vector<int> best1, best2;
   random(g, ham1, ham2);
   caching(g, ham1, ham2);
   int currCost = smartCalcDistance(&g, ham1, ham2);
-  // cout << "INIT COST: " << currCost << endl;
-  // cout << "INIT: " << ham1->size() << " " << ham2->size() << endl;
   best1 = *ham1;
   best2 = *ham2;
   while (true) {
@@ -187,19 +184,11 @@ void LNS(Graph g, vector<int> *ham1, vector<int> *ham2) {
     auto end = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
     if (duration.count() > maxTime) break;
-
     destroy(&g, ham1, ham2);
-    // cout << "Destroyed: " << ham1->size() + ham2->size() << endl;
     repair(&g, ham1, ham2);
-    // cout<<"Repair: "<<ham1->size() + ham2->size()<<endl;
     caching(g, ham1, ham2);
     int cost = smartCalcDistance(&g, ham1, ham2);
-    // cout<<"Cost: "<<cost<<endl;
     if (cost < currCost) {
-      // cout << "iteration: " << iteration << endl;
-      // cout << "found better solution: " << cost << endl;
-      // cout << "size: " << ham1->size() << " " << ham2->size() << endl;
-
       currCost = cost;
       best1 = *ham1;
       best2 = *ham2;
@@ -207,7 +196,6 @@ void LNS(Graph g, vector<int> *ham1, vector<int> *ham2) {
       *ham1 = best1;
       *ham2 = best2;
     }
-    // if (iteration == 10) break;
   }
   cout << iteration << " ";
 };

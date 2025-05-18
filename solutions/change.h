@@ -14,5 +14,6 @@ using namespace std;
 void MSLS(Graph g, vector<int> *ham1, vector<int> *ham2);
 void ILS(Graph g, vector<int> *ham1, vector<int> *ham2);
 void LNS(Graph g, vector<int> *ham1, vector<int> *ham2);
+void repair(Graph *g, vector<int> *ham1, vector<int> *ham2);
 
 #endif  // CHANGE_H

@@ -40,7 +40,7 @@ def compute_statistics(data):
 
 if __name__ == "__main__":
     create = ["none"] # "regretWeighted" ,
-    algs = [ "ILS"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
+    algs = [ "gen"] # ,"localSteepVert", "localGreedyVert", "localSteepEdge","localGreedyEdge"
     instances = ["kroA200", "kroB200"]
     times = 10
 

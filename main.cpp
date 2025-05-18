@@ -6,6 +6,7 @@
 #include "solutions/local.h"
 #include "solutions/regret.h"
 #include "solutions/smart.h"
+#include "solutions/gen.h"
 
 using namespace std;
 void loadGraph(string filename, Graph *g);
@@ -14,7 +15,7 @@ int calcDistance(Graph g, vector<int> ham1, vector<int> ham2);
 
 int main(int argc, char *argv[]) {
   string create = argc == 5 ? argv[1] : "none";
-  string method = argc == 5 ? argv[2] : "LNS";
+  string method = argc == 5 ? argv[2] : "gen";
   string inFile = argc == 5 ? argv[3] : "kroA200.tsp";
   string outFile = argc == 5 ? argv[4] : "test.out";
   inFile = "in/" + inFile;
@@ -56,6 +57,8 @@ int main(int argc, char *argv[]) {
     ILS(graph, &ham1, &ham2);
   else if (method == "LNS")
     LNS(graph, &ham1, &ham2);
+  else if (method == "gen")
+    gen(graph, &ham1, &ham2);
 
   auto end = chrono::high_resolution_clock::now();
   auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
